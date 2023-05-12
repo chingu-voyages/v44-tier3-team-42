@@ -26,6 +26,7 @@ module.exports = {
     'next/core-web-vitals',
   ],
   plugins: ['react'],
+  ignorePatterns: ['.*.js', '*.config.js', 'plopfile.js'],
   rules: {
     // prefer named arrow-function components
     'react/function-component-definition': [
