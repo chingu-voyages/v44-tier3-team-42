@@ -1,0 +1,87 @@
+{
+  "name": "thoughtflow",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "commit": "cz",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "plop": "plop",
+    "dev": "next dev",
+    "postinstall": "husky install",
+    "lint": "next lint",
+    "start": "next start",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.14",
+    "@hookform/resolvers": "^3.1.0",
+    "@tanstack/react-query": "^4.29.5",
+    "clsx": "^1.2.1",
+    "next": "13.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-iconly": "^2.2.10",
+    "tailwind-merge": "^1.12.0",
+    "zod": "^3.21.4",
+    "zustand": "^4.3.8"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@testing-library/cypress": "^9.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/node": "^20.1.2",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
+    "autoprefixer": "^10.4.14",
+    "commitizen": "^4.3.0",
+    "cypress": "^12.12.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.40.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "^13.4.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-hooks": "^1.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "lint-staged": "^13.2.2",
+    "plop": "^3.1.2",
+    "postcss": "^8.4.23",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.4"
+  },
+  "packageManager": "yarn@3.5.1",
+  "engines": {
+    "node": ">=18.12.1",
+    "npm": ">=8.19.2"
+  }
+}
