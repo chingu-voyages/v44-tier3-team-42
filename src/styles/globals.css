@@ -12,3 +12,13 @@
     line-height: 1.5;
   }
 }
+
+.w-md-editor-text-pre > code,
+.w-md-editor-text-input {
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+}
+
+.w-md-editor-toolbar li > button {
+  height: min-content !important;
+}
