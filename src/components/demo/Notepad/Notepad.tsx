@@ -36,18 +36,24 @@ const Notepad: React.FC = () => {
           }}
         />
       </div>
-      <Button
-        size="lg"
-        className="block mx-auto mt-16 mb-12"
-        leadIcon={<PaperDownload />}
-        onClick={() => {
-          const { parseMarkdown, exportPDF } = generatePDF();
-          parseMarkdown(mdText);
-          exportPDF('demo-thoughts.pdf');
-        }}
-      >
-        Export
-      </Button>
+      <div className="mt-16 mb-12">
+        <Button
+          size="lg"
+          className="block mx-auto "
+          leadIcon={<PaperDownload />}
+          onClick={() => {
+            const { parseMarkdown, exportPDF } = generatePDF();
+            parseMarkdown(mdText);
+            exportPDF('demo-thoughts.pdf');
+          }}
+        >
+          Export
+        </Button>
+        <p className="mt-8 max-w-[45ch] mx-auto text-center font-bold text-sm">
+          Note: If you use markdown features not present in the editor, then
+          your PDF may export weirdly...
+        </p>
+      </div>
     </div>
   );
 };
