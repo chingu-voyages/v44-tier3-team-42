@@ -5445,6 +5445,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hast-util-sanitize@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "hast-util-sanitize@npm:4.1.0"
+  dependencies:
+    "@types/hast": ^2.0.0
+  checksum: 4f1786d6556bae6485a657a3e77e7e71b573fd20e4e2d70678e0f445eb8fe3dc6c4441cda6d18b89a79b53e2c03b6232eb6c470ecd478737050724ea09398603
+  languageName: node
+  linkType: hard
+
 "hast-util-select@npm:^5.0.5, hast-util-select@npm:~5.0.1":
   version: 5.0.5
   resolution: "hast-util-select@npm:5.0.5"
@@ -9662,6 +9671,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rehype-sanitize@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "rehype-sanitize@npm:5.0.1"
+  dependencies:
+    "@types/hast": ^2.0.0
+    hast-util-sanitize: ^4.0.0
+    unified: ^10.0.0
+  checksum: aa5f3627a767124d21c155b79bab8d5c2bc02e7b14164a5d22fe35b114f331d3bdb81afc150d1378d5cdb39107bd868b28814b1501a1954fdd1183b16dcdd5be
+  languageName: node
+  linkType: hard
+
 "rehype-slug@npm:~5.1.0":
   version: 5.1.0
   resolution: "rehype-slug@npm:5.1.0"
@@ -10776,6 +10796,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: ^7.43.9
     react-iconly: ^2.2.10
+    rehype-sanitize: ^5.0.1
     tailwind-merge: ^1.12.0
     tailwindcss: ^3.3.2
     typescript: ^5.0.4
