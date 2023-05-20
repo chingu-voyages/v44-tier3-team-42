@@ -1,7 +1,8 @@
 /* eslint-disable new-cap */
 import { jsPDF } from 'jspdf';
 
-const MARKDOWN_RGX = /\s+(?=(?:[^*]*[*][^*]*[*])*[^*]*$)/g;
+const MARKDOWN_RGX =
+  /\s+(?=(?:\*{1,2}[^*]+\*{1,2}|[^*])*$)(?=(?:(?:~{2}[^~]+~{2}|[^~])*$))/g;
 const INDENT_SPACE = 20;
 
 const generatePDF = () => {
