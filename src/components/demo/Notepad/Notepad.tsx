@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PaperDownload } from 'react-iconly';
+import rehypeSanitize from 'rehype-sanitize';
 
 import { TextEditor, Button } from '@/components/ui';
 import { useLocalStorage } from '@/hooks';
@@ -30,6 +31,9 @@ const Notepad: React.FC = () => {
           onChange={setValue}
           preview="edit"
           height={372}
+          previewOptions={{
+            rehypePlugins: [[rehypeSanitize]],
+          }}
         />
       </div>
       <Button
