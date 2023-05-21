@@ -1,14 +1,51 @@
-# voyage-tasks
+# ThoughtFlow
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+**ThoughtFlow** is a privacy-friendly web app that allow for journaling thoughts/perspectives about anything in an easy to use interface.
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+[🚀 Live Demo](https://thoughtflow.vercel.app)
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+<!-- GETTING STARTED -->
 
-> Own it & Make it your Own!
+## 💻 Getting Started <a name="getting-started"></a>
+
+To get a local copy up and running, follow these steps.
+
+### Setup
+
+Clone this repository to your desired folder:
+
+```sh
+  $ cd my-folder
+  $ git clone git@github.com:chingu-voyages/v44-tier3-team-42.git
+```
+
+Make sure to add your .env.local as a copy from `.env.local.example`
+
+### Install
+
+Install this project with:
+
+```sh
+  $ cd my-project
+  $ yarn
+```
+
+### Usage
+
+To run the project, execute the following command:
+
+```sh
+  $ yarn dev
+```
+
+## 👥 Authors
+
+- [@TazDeCoder](https://github.com/TazDeCoder) | Frontend Developer
+- [@thusbandUK](https://github.com/thusbandUK) | Backend Developer
+- [@Remi-dee](https://github.com/TazDeCoder) | Fullstack Developer
+
+<!-- ACKNOWLEDGEMENTS -->
+
+## 🙏 Acknowledgments
+
+A special thanks to the team at Chingus for helping out to make this possible!
