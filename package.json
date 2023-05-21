@@ -6,11 +6,11 @@
     "commit": "cz",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "plop": "plop",
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "postinstall": "husky install",
     "lint": "next lint",
-    "start": "next start",
+    "plop": "plop",
+    "start": "next start -p 4000",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:watch": "jest --watch"
@@ -84,7 +84,6 @@
   },
   "packageManager": "yarn@3.5.1",
   "engines": {
-    "node": ">=18.12.1",
-    "npm": ">=8.19.2"
+    "node": ">=18.12.1"
   }
 }
