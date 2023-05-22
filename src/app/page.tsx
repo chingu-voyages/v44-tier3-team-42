@@ -1,6 +1,13 @@
+'use client'
+
+import Form from "@/components/auth/registerForm";
+
+
+
+
 const Landing = () => (
   <main className="min-h-screen p-12">
-    <div>Landing</div>
+    <div><Form/></div>
   </main>
 );
 

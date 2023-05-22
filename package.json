@@ -33,10 +33,12 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@hookform/resolvers": "^3.1.0",
-    "@tanstack/react-query": "^4.29.5",
+    "@tanstack/query-core": "^4.29.7",
+    "@tanstack/react-query": "^4.29.7",
     "@uiw/react-md-editor": "^3.20.10",
     "clsx": "^1.2.1",
     "next": "13.4.1",
+    "postinstall": "^0.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",

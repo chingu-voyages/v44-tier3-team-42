@@ -24,6 +24,13 @@
       "test-utils": ["./test/test-utils"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "type",
+    "src/app/util/providers.tsx"
+  ],
   "exclude": ["node_modules"]
 }
