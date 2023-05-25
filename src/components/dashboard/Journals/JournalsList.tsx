@@ -1,0 +1,45 @@
+'use client';
+
+import Image from 'next/image';
+import { Edit } from 'react-iconly';
+
+import { Button } from '@/components/ui';
+import { JournalReference } from '@/services';
+
+type Props = {
+  journals: JournalReference[];
+};
+
+const JournalsList: React.FC<Props> = ({ journals }) => (
+  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:grid-rows-2 justify-items-center">
+    {journals.map(({ cover_image }, idx) => (
+      <div
+        // NOTE: Backend doesn't return an id so we opt to this
+        // eslint-disable-next-line react/no-array-index-key
+        key={idx}
+        className="relative w-2/3 max-w-xs border-2 rounded-lg md:w-1/3 border-subtleLight"
+      >
+        <div className="relative w-full h-52">
+          <Image src={cover_image} alt="" className="rounded-md" fill />
+        </div>
+        <div className="absolute top-2 right-2">
+          <button
+            type="button"
+            className="rounded-full text-primary bg-primarySubtle p-[10px]"
+          >
+            <Edit size="small" />
+          </button>
+        </div>
+        <Button
+          className="absolute bottom-6 right-1/3"
+          size="sm"
+          variant="secondary"
+        >
+          View
+        </Button>
+      </div>
+    ))}
+  </div>
+);
+
+export default JournalsList;
