@@ -1,8 +1,10 @@
 'use client';
 
+import { useCallback, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { getJournals } from '@/services';
+import { type JournalReference, getJournals } from '@/services';
+import SearchInput from './SearchInput';
 import JournalsList from './JournalsList';
 
 const Journals = () => {
@@ -12,6 +14,23 @@ const Journals = () => {
     isError,
     error,
   } = useQuery(['user-journals'], getJournals);
+  const [filteredJournals, setFilteredJournals] = useState(journalsData);
+
+  const searchUpdateHandler = useCallback(
+    (newQuery: string) => {
+      setFilteredJournals((prevJournals) => {
+        if (typeof journalsData === 'undefined') {
+          return prevJournals;
+        }
+
+        return [...journalsData].filter((journal) => {
+          const transformedTitle = journal.journal_title.toLowerCase();
+          return transformedTitle.includes(newQuery);
+        });
+      });
+    },
+    [journalsData],
+  );
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -23,7 +42,12 @@ const Journals = () => {
     );
   }
 
-  return <JournalsList journals={journalsData} />;
+  return (
+    <div className="mt-8 flex-justify-center">
+      <SearchInput onUpdate={searchUpdateHandler} />
+      <JournalsList journals={filteredJournals as JournalReference[]} />
+    </div>
+  );
 };
 
 export default Journals;
