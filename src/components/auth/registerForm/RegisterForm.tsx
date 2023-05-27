@@ -4,12 +4,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import {mutation} from '../../../../plop-templates/service'
 import {
   RegisterValidationSchema,
   registerValidationSchema,
 } from './schemaValidation';
-import { registerUser } from '../../../../plop-templates/service';
+
 
 const Form: React.FC = () => {
   const {
@@ -21,7 +21,7 @@ const Form: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<RegisterValidationSchema> = (userData) =>
-    registerUser(userData);
+   mutation.mutate(userData)
 
   return (
     <form className=" p-6 pt-6 pb-8 mb-4 " onSubmit={handleSubmit(onSubmit)}>
@@ -66,7 +66,6 @@ const Form: React.FC = () => {
 
         {errors.email && (
           <p className="text-xs italic text-red-500 mt-2">
-            {' '}
             {errors.email?.message}
           </p>
         )}
@@ -93,28 +92,7 @@ const Form: React.FC = () => {
         )}
       </div>
 
-      <div className="mb-4">
-        <label className="" htmlFor="c_password">
-          Confirm Password
-        </label>
-        <input
-          className={`w-full px-3 py-2 text-sm leading-tight
-           text-gray-700 border ${
-             errors.confirmPassword && 'border-red-500'
-           } rounded appearance-none 
-           focus:outline-none focus:shadow-outline`}
-          id="c_password"
-          type="password"
-          placeholder="password"
-          {...register('confirmPassword')}
-        />
-        {errors.confirmPassword && (
-          <p className="text-xs italic text-red-500 mt-2">
-            {errors.confirmPassword?.message}
-          </p>
-        )}
-      </div>
-
+      
       <div className="mb-6 text-center">
         <button
           className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"

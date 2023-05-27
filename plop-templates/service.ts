@@ -3,11 +3,12 @@
 
 import { SERVER_URL } from '@/config/constants';
 import { LoginData, RegisterData } from '../type/UserdataType';
-import { post } from 'cypress/types/jquery';
+import { useMutation } from '@tanstack/react-query'
 
 //register user
-const registerUser = async (userData: RegisterData): Promise<any> => {
-  const res = await fetch(`${SERVER_URL}/`, {
+
+/*const registerUser = async (userData: RegisterData): Promise<any> => {
+  const res = await fetch(`${SERVER_URL}/signup`, {
     method: 'POST',
     body: JSON.stringify(userData),
   });
@@ -17,13 +18,41 @@ const registerUser = async (userData: RegisterData): Promise<any> => {
   if (!res.ok) {
     throw new Error(data.error);
   }
-
+  console.log(data);
   return data;
+};*/
+
+
+const registerUser = async (userData: RegisterData): Promise<any> => {
+  const response = await axios.post(`${SERVER_URL}/signIn`, userData);
+
+  if (response.data) {
+    //  localStorage.setItem[("user", JSON.stringify(response.data))];
+    console.log(response.data);
+  }
+
+  return response.data;
 };
+
+ const mutation = useMutation({
+  mutationFn: registerUser
+})
 
 //log in user
+
 const logInUser = async (userData: LoginData): Promise<any> => {
-  const res = await fetch(`${SERVER_URL}/`, {
+  const response = await axios.post(`${SERVER_URL}login`, userData);
+
+  if (response.data) {
+    //  localStorage.setItem[("user", JSON.stringify(response.data))];
+    console.log(response.data);
+  }
+
+  return response.data;
+};
+
+/*const logInUser = async (userData: LoginData): Promise<any> => {
+  const res = await fetch(`${SERVER_URL}/login/password`, {
     method: 'POST',
     body: JSON.stringify(userData),
   });
@@ -34,6 +63,6 @@ const logInUser = async (userData: LoginData): Promise<any> => {
     throw new Error(data.error);
   }
   return data;
-};
+};*/
 
-export { registerUser, logInUser };
+export {mutation, registerUser, logInUser };
