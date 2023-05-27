@@ -6,11 +6,11 @@
     "commit": "cz",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "plop": "plop",
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "postinstall": "husky install",
     "lint": "next lint",
-    "start": "next start",
+    "plop": "plop",
+    "start": "next start -p 4000",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:watch": "jest --watch"
@@ -38,12 +38,14 @@
     "@uiw/react-md-editor": "^3.20.10",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
+    "jspdf": "^2.5.1",
     "next": "13.4.1",
     "postinstall": "^0.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-iconly": "^2.2.10",
+    "rehype-sanitize": "^5.0.1",
     "tailwind-merge": "^1.12.0",
     "zod": "^3.21.4",
     "zustand": "^4.3.8"
@@ -85,7 +87,6 @@
   },
   "packageManager": "yarn@3.5.1",
   "engines": {
-    "node": ">=18.12.1",
-    "npm": ">=8.19.2"
+    "node": ">=18.12.1"
   }
 }
