@@ -30,7 +30,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "type",
-    "src/app/util/providers.tsx"
+    "src/app/register/providers.tsx"
   ],
   "exclude": ["node_modules"]
 }

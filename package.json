@@ -34,7 +34,7 @@
     "@headlessui/react": "^1.7.14",
     "@hookform/resolvers": "^3.1.0",
     "@tanstack/query-core": "^4.29.7",
-    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query": "^4.29.5",
     "@uiw/react-md-editor": "^3.20.10",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",

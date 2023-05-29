@@ -3,16 +3,18 @@
 
 import { SERVER_URL } from '@/config/constants';
 import { LoginData, RegisterData } from '../type/UserdataType';
-import { useMutation } from '@tanstack/react-query'
+
+import axios from 'axios';
 
 //register user
 
 /*const registerUser = async (userData: RegisterData): Promise<any> => {
-  const res = await fetch(`${SERVER_URL}/signup`, {
+  const res = await fetch("http://localhost:3000/signup", {
     method: 'POST',
+    mode: "cors",
     body: JSON.stringify(userData),
   });
-  console.log(userData);
+  
   const data = await res.json();
 
   if (!res.ok) {
@@ -24,7 +26,7 @@ import { useMutation } from '@tanstack/react-query'
 
 
 const registerUser = async (userData: RegisterData): Promise<any> => {
-  const response = await axios.post(`${SERVER_URL}/signIn`, userData);
+  const response = await axios.post("http://localhost:3000/signup", userData);
 
   if (response.data) {
     //  localStorage.setItem[("user", JSON.stringify(response.data))];
@@ -34,9 +36,9 @@ const registerUser = async (userData: RegisterData): Promise<any> => {
   return response.data;
 };
 
- const mutation = useMutation({
-  mutationFn: registerUser
-})
+
+
+
 
 //log in user
 
@@ -65,4 +67,4 @@ const logInUser = async (userData: LoginData): Promise<any> => {
   return data;
 };*/
 
-export {mutation, registerUser, logInUser };
+export { registerUser, logInUser };
