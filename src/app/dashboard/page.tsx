@@ -1,8 +1,12 @@
+import CreateJournal from '@/components/dashboard/CreateJournal';
 import Journals from '@/components/dashboard/Journals';
 
 const Dashboard = () => (
   <main className="min-h-screen p-12">
-    <div>Dashboard</div>
+    <div className="flex items-center">
+      <h1>Dashboard</h1>
+      <CreateJournal />
+    </div>
     <Journals />
   </main>
 );
