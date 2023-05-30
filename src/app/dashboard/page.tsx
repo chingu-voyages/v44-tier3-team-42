@@ -3,7 +3,7 @@ import Journals from '@/components/dashboard/Journals';
 
 const Dashboard = () => (
   <main className="min-h-screen p-12">
-    <div className="flex items-center">
+    <div className="flex items-center justify-between max-w-3xl mx-auto">
       <h1>Dashboard</h1>
       <CreateJournal />
     </div>
