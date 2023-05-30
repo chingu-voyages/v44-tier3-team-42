@@ -5,12 +5,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query'
-
+import { registerUser } from '@/services/authService';
 import {
   RegisterValidationSchema,
   registerValidationSchema,
 } from './schemaValidation';
-import { registerUser } from '../../../../plop-templates/service';
+
+
 
 const Form: React.FC = () => {
   const {
@@ -21,12 +22,13 @@ const Form: React.FC = () => {
     resolver: zodResolver(registerValidationSchema),
   });
 
-  const registerMutation = useMutation({
+  /*const registerMutation = useMutation({
     mutationFn: registerUser
-  })
+  })*/
 
   const onSubmit: SubmitHandler<RegisterValidationSchema> = (userData) =>
-    registerMutation.mutate(userData)
+  registerUser(userData) 
+  // registerMutation.mutate(userData)
 
   return (
     <form className=" p-6 pt-6 pb-8 mb-4 " onSubmit={handleSubmit(onSubmit)}>

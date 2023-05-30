@@ -23,9 +23,8 @@ import { LoginData, RegisterData } from '../../type/UserdataType';
   return data;
 };*/
 
-
 const registerUser = async (userData: RegisterData): Promise<any> => {
-  const response = await axios.post("http://localhost:3000/signup", userData);
+  const response = await axios.post(`${SERVER_URL}signup`, userData);
 
   if (response.data) {
     //  localStorage.setItem[("user", JSON.stringify(response.data))];
@@ -34,10 +33,6 @@ const registerUser = async (userData: RegisterData): Promise<any> => {
 
   return response.data;
 };
-
-
-
-
 
 //log in user
 
