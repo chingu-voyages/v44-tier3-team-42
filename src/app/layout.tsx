@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-import Providers from './providers';
 
 
 export const metadata = {
@@ -9,10 +8,7 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
-    <body>
-      <Providers> {children} </Providers>
-     
-      </body>
+    <body>{children}</body>
   </html>
 );
 

@@ -2,9 +2,8 @@
 // Also, remember to export * from this file into the `index.ts`
 
 import { SERVER_URL } from '@/config/constants';
-import { LoginData, RegisterData } from '../type/UserdataType';
-
 import axios from 'axios';
+import { LoginData, RegisterData } from '../../type/UserdataType';
 
 //register user
 

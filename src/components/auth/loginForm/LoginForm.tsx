@@ -2,12 +2,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { logInUser } from '@/services/authService';
 import {
   LoginValidationSchema,
   logInValidationSchema,
 } from '../registerForm/schemaValidation';
-import { logInUser } from '../../../../plop-templates/service';
+
+
 
 const Form: React.FC = () => {
   const {
