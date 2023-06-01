@@ -61,8 +61,10 @@ export const getJournals = async (): Promise<GetJournalsResponse[]> => {
     throw new Error((data as ErrorResponse).message);
   }
 
-  // Check to see if JSON object in the data array is valid
-  journalReferenceSchema.parse(data[0]);
+  if (data.length > 0) {
+    // Check to see if JSON object in the data array is valid
+    journalReferenceSchema.parse(data[0]);
+  }
 
   return data;
 };
