@@ -1,13 +1,22 @@
+'use client';
+
 import useBoundStore from '@/store';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { loginUser } from '@/services';
+import { useRouter } from 'next/navigation';
+
+import { Button, Dialog } from '@/components/ui';
+
+import { useState } from 'react';
+
 import LoginForm from './LoginForm';
 
 const LoginUser = () => {
   const router = useRouter();
   const setAlert = useBoundStore((state) => state.setAlert);
-  const registerUserMutation = useMutation({
-    mutationFn: registerUser,
+  const [isOpen, setIsOpen] = useState(false);
+  const loginUserMutation = useMutation({
+    mutationFn: loginUser,
     onSuccess: () => {
       router.replace('/dashboard');
     },
@@ -20,10 +29,14 @@ const LoginUser = () => {
   });
 
   return (
-    <div className="w-4/5 max-w-sm mx-auto">
-      <h1 className="leading-10 text-[32px] text-center mb-6">Signup</h1>
-      <LoginForm onSubmit={(data) => registerUserMutation.mutate(data)} />
-    </div>
+    <>
+      <Button className='bg-primary text-white' variant="tertiary" onClick={() => setIsOpen(true)}>
+        Login
+      </Button>
+      <Dialog title="Login" open={isOpen} onClose={() => setIsOpen(false)}>
+        <LoginForm onSubmit={(data) => loginUserMutation.mutate(data)} />
+      </Dialog>
+    </>
   );
 };
 

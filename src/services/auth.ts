@@ -48,6 +48,35 @@ export const registerUser = async (
 
   if (!res.ok) {
     // NOTE: Server doesn't respond with an error message
-    throw new Error('Failed to register user');
+    throw new Error('Failed, to login user');
+  }
+};
+
+/// //// METHOD
+
+export const loginUserRequestSchema = z.object({
+  email: z
+    .string()
+    .email({ message: 'Must provide a valid email' })
+    .max(50, { message: 'A different email address please :D' }),
+  password: z
+    .string()
+    .min(1, { message: 'Include at least a single letter :¬)' }),
+});
+
+export type LoginUserRequest = z.infer<typeof loginUserRequestSchema>;
+
+export const loginUser = async (UserData: LoginUserRequest): Promise<void> => {
+  const res = await fetch(`${SERVER_URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(UserData),
+  });
+
+  if (!res.ok) {
+    // NOTE: Server doesn't respond with an error message
+    throw new Error("User doesn't exist");
   }
 };

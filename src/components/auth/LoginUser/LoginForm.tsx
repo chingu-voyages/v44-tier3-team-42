@@ -1,11 +1,14 @@
+
+
 import { Button, TextField } from '@/components/ui';
+import { LoginUserRequest, loginUserRequestSchema } from '@/services';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Hide, Show } from 'react-iconly';
 
 type Props = {
-  onSubmit: (data: RegisterUserRequest) => void;
+  onSubmit: (data: LoginUserRequest) => void;
 };
 
 const LoginForm: React.FC<Props> = ({ onSubmit }) => {
@@ -14,8 +17,8 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterUserRequest>({
-    resolver: zodResolver(registerUserRequestSchema),
+  } = useForm<LoginUserRequest>({
+    resolver: zodResolver(loginUserRequestSchema),
   });
 
   let trailIcon: React.ReactNode = null;
@@ -36,18 +39,18 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <form className="grid gap-y-5" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-y-3">
+     <div className="flex flex-col gap-y-3">
         <TextField
-          id="username"
+          id="email"
           className="w-full"
-          label="Username"
-          placeholder="Enter a username"
-          autoComplete="username"
+          label="Email"
+          placeholder="Enter your email"
+          autoComplete="email"
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...register('username')}
+          {...register('email')}
         />
-        {errors.username && (
-          <p className="text-xs text-red-500">{errors.username.message}</p>
+        {errors.email && (
+          <p className="text-xs text-red-500">{errors.email?.message}</p>
         )}
       </div>
 
@@ -57,7 +60,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
           className="w-full"
           type={showPassword ? 'text' : 'password'}
           label="Password"
-          placeholder="Enter a strong password"
+          placeholder="Enter your password"
           autoComplete="new-password"
           trailIcon={trailIcon}
           // eslint-disable-next-line react/jsx-props-no-spreading
@@ -72,7 +75,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
         className="mt-8 place-self-center w-max hover:bg-blue-700 focus:shadow-outline"
         disabled={isSubmitting}
       >
-        Create Account
+        Login
       </Button>
     </form>
   );
