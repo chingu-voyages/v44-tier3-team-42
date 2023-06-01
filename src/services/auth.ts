@@ -40,6 +40,7 @@ export const registerUser = async (
 ): Promise<void> => {
   const res = await fetch(`${SERVER_URL}/signup`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
