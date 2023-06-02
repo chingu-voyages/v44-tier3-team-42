@@ -53,8 +53,6 @@ export const registerUser = async (
   }
 };
 
-/// //// METHOD
-
 export const loginUserRequestSchema = z.object({
   email: z
     .string()
@@ -67,13 +65,16 @@ export const loginUserRequestSchema = z.object({
 
 export type LoginUserRequest = z.infer<typeof loginUserRequestSchema>;
 
-export const loginUser = async (UserData: LoginUserRequest): Promise<void> => {
+export const loginUser = async (
+  existingUser: LoginUserRequest,
+): Promise<void> => {
   const res = await fetch(`${SERVER_URL}/login`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    body: JSON.stringify(UserData),
+    body: JSON.stringify(existingUser),
   });
 
   if (!res.ok) {
