@@ -2,10 +2,10 @@ import Image from 'next/image';
 import { Edit } from 'react-iconly';
 
 import { Button } from '@/components/ui';
-import { JournalReference } from '@/services';
+import type { GetJournalsResponse } from '@/services';
 
 type Props = {
-  journals: JournalReference[];
+  journals: GetJournalsResponse[];
 };
 
 const JournalsList: React.FC<Props> = ({ journals }) => (
@@ -18,7 +18,9 @@ const JournalsList: React.FC<Props> = ({ journals }) => (
         className="relative w-full border-2 rounded-lg border-subtleLight"
       >
         <div className="relative w-full h-52 sm:h-56 md:h-60 lg:h-64">
-          <Image src={cover_image} alt="" className="rounded-md" fill />
+          {cover_image && (
+            <Image src={cover_image} alt="" className="rounded-md" fill />
+          )}
         </div>
         <div className="absolute top-2 right-2">
           <button
