@@ -2,6 +2,10 @@ import z from 'zod';
 
 import { SERVER_URL } from '@/config/constants';
 
+type ErrorResponse = {
+  message: string;
+};
+
 /// ///////////////////////////////////
 /// //////// SCHEMAS
 /// ///////////////////////////////////
@@ -40,6 +44,7 @@ export const registerUser = async (
 ): Promise<void> => {
   const res = await fetch(`${SERVER_URL}/signup`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
@@ -47,15 +52,13 @@ export const registerUser = async (
   });
 
   if (!res.ok) {
-    // NOTE: Server doesn't respond with an error message
-    throw new Error('Failed, to login user');
+    const err = await res.json();
+    throw new Error((err as ErrorResponse).message);
   }
 };
 
-/// //// METHOD
-
 export const loginUserRequestSchema = z.object({
-  email: z
+  username: z
     .string()
     .email({ message: 'Must provide a valid email' })
     .max(50, { message: 'A different email address please :D' }),
@@ -66,17 +69,20 @@ export const loginUserRequestSchema = z.object({
 
 export type LoginUserRequest = z.infer<typeof loginUserRequestSchema>;
 
-export const loginUser = async (UserData: LoginUserRequest): Promise<void> => {
+export const loginUser = async (
+  existingUser: LoginUserRequest,
+): Promise<void> => {
   const res = await fetch(`${SERVER_URL}/login`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    body: JSON.stringify(UserData),
+    body: JSON.stringify(existingUser),
   });
 
   if (!res.ok) {
-    // NOTE: Server doesn't respond with an error message
-    throw new Error("User doesn't exist");
+    const err = await res.json();
+    throw new Error((err as ErrorResponse).message);
   }
 };

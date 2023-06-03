@@ -18,7 +18,7 @@ const journalReferenceSchema = z.object({
   id: z.number(),
   user_id: z.number(),
   journal_title: z.string(),
-  cover_image: z.string(),
+  cover_image: z.string().or(z.null()),
 });
 
 export type JournalReference = z.infer<typeof journalReferenceSchema>;
@@ -44,11 +44,10 @@ export type JournalContent = z.infer<typeof journalContentSchema>;
 /// ///////////////////////////////////
 
 const getJournalsResponseSchema = journalReferenceSchema.omit({
-  id: true,
   user_id: true,
 });
 
-type GetJournalsResponse = z.infer<typeof getJournalsResponseSchema>;
+export type GetJournalsResponse = z.infer<typeof getJournalsResponseSchema>;
 
 export const getJournals = async (): Promise<GetJournalsResponse[]> => {
   const res = await fetch(`${SERVER_URL}/browse-journals`, {
@@ -61,8 +60,10 @@ export const getJournals = async (): Promise<GetJournalsResponse[]> => {
     throw new Error((data as ErrorResponse).message);
   }
 
-  // Check to see if JSON object in the data array is valid
-  journalReferenceSchema.parse(data[0]);
+  if (data.length > 0) {
+    // Check to see if JSON object in the data array is valid
+    journalReferenceSchema.parse(data[0]);
+  }
 
   return data;
 };
