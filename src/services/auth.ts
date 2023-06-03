@@ -2,6 +2,10 @@ import z from 'zod';
 
 import { SERVER_URL } from '@/config/constants';
 
+type ErrorResponse = {
+  message: string;
+};
+
 /// ///////////////////////////////////
 /// //////// SCHEMAS
 /// ///////////////////////////////////
@@ -48,13 +52,13 @@ export const registerUser = async (
   });
 
   if (!res.ok) {
-    // NOTE: Server doesn't respond with an error message
-    throw new Error('Failed, to login user');
+    const err = await res.json();
+    throw new Error((err as ErrorResponse).message);
   }
 };
 
 export const loginUserRequestSchema = z.object({
-  email: z
+  username: z
     .string()
     .email({ message: 'Must provide a valid email' })
     .max(50, { message: 'A different email address please :D' }),
@@ -78,7 +82,7 @@ export const loginUser = async (
   });
 
   if (!res.ok) {
-    // NOTE: Server doesn't respond with an error message
-    throw new Error("User doesn't exist");
+    const err = await res.json();
+    throw new Error((err as ErrorResponse).message);
   }
 };
