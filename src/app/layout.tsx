@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import Popup from '@/components/common/Popup';
 import Providers from './providers';
 
 export const metadata = {
@@ -10,6 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body>
       <Providers>{children}</Providers>
+      <Popup />
     </body>
   </html>
 );

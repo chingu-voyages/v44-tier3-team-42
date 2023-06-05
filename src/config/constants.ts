@@ -7,3 +7,4 @@ export const MEDIA_QUERY_BREAKPOINTS = {
   xl: '1280px',
   '2xl': '1536px',
 } as const;
+export const ALERT_AUTO_DISMISS = 5000;
