@@ -80,3 +80,19 @@ export const loginUser = async (UserData: LoginUserRequest): Promise<void> => {
     throw new Error("User doesn't exist");
   }
 };
+
+
+export const logOutUser = async (): Promise<void> => {
+  const res = await fetch(`${SERVER_URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(UserData),
+  });
+
+  if (!res.ok) {
+    // NOTE: Server doesn't respond with an error message
+    throw new Error("User doesn't exist");
+  }
+};

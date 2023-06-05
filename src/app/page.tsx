@@ -1,6 +1,7 @@
 'use client';
 
 import LoginUser from '@/components/auth/LoginUser/LoginUser';
+import LogoutUser from '@/components/auth/LogoutUser/LogoutUser';
 
 const Landing = () => (
   <main className="min-h-screen p-12">
