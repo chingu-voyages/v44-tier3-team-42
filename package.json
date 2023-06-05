@@ -33,10 +33,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@hookform/resolvers": "^3.1.0",
-<<<<<<< HEAD
-    "@tanstack/query-core": "^4.29.7",
-=======
->>>>>>> fb7085d5e758d21b7b906019aedd77576f170a22
     "@tanstack/react-query": "^4.29.5",
     "@uiw/react-md-editor": "^3.20.10",
     "clsx": "^1.2.1",
