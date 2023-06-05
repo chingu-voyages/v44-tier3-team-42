@@ -1,5 +1,3 @@
-
-
 import { Button, TextField } from '@/components/ui';
 import { LoginUserRequest, loginUserRequestSchema } from '@/services';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -39,7 +37,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <form className="grid gap-y-5" onSubmit={handleSubmit(onSubmit)}>
-     <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col gap-y-3">
         <TextField
           id="email"
           className="w-full"
@@ -47,10 +45,10 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
           placeholder="Enter your email"
           autoComplete="email"
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...register('email')}
+          {...register('username')}
         />
-        {errors.email && (
-          <p className="text-xs text-red-500">{errors.email?.message}</p>
+        {errors.username && (
+          <p className="text-xs text-red-500">{errors.username?.message}</p>
         )}
       </div>
 

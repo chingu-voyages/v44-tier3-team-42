@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { type JournalReference, getJournals } from '@/services';
+import { getJournals } from '@/services';
 import SearchInput from './SearchInput';
 import JournalsList from './JournalsList';
 
@@ -45,7 +45,7 @@ const Journals = () => {
   return (
     <div className="mt-8 flex-justify-center">
       <SearchInput onUpdate={searchUpdateHandler} />
-      <JournalsList journals={filteredJournals as JournalReference[]} />
+      {filteredJournals && <JournalsList journals={filteredJournals} />}
     </div>
   );
 };
