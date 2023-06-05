@@ -1281,16 +1281,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@tanstack/query-core@npm:^4.29.7":
-  version: 4.29.7
-  resolution: "@tanstack/query-core@npm:4.29.7"
-  checksum: f28441a1fc17881d770ebacbe3a2fcf58bd065ac0cf58f8dc544d367f00d7f65213e09a1a1280e021eef25a50b307cac6884173b5acf32570e755baf29b741aa
-  languageName: node
-  linkType: hard
-
-=======
->>>>>>> fb7085d5e758d21b7b906019aedd77576f170a22
 "@tanstack/react-query@npm:^4.29.5":
   version: 4.29.5
   resolution: "@tanstack/react-query@npm:4.29.5"
@@ -10768,10 +10758,6 @@ __metadata:
     "@commitlint/config-conventional": ^17.6.3
     "@headlessui/react": ^1.7.14
     "@hookform/resolvers": ^3.1.0
-<<<<<<< HEAD
-    "@tanstack/query-core": ^4.29.7
-=======
->>>>>>> fb7085d5e758d21b7b906019aedd77576f170a22
     "@tanstack/react-query": ^4.29.5
     "@testing-library/cypress": ^9.0.0
     "@testing-library/jest-dom": ^5.16.5
