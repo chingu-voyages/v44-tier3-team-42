@@ -96,20 +96,24 @@ export const createJournal = async (
   return data;
 };
 
-const getJournalByNameResponseSchema = journalReferenceSchema.pick({
-  id: true,
+const getJournalByNameResponseSchema = journalReferenceSchema.extend({
+  sections: z.array(
+    z.object({
+      contentDetails: journalContentSchema,
+    }),
+  ),
 });
 
-type GetJournalByNameResponse = z.infer<typeof getJournalByNameResponseSchema>;
+export type GetJournalByNameResponse = z.infer<
+  typeof getJournalByNameResponseSchema
+>;
 
 export const getJournalByName = async (
   title: string,
 ): Promise<GetJournalByNameResponse> => {
-  const req = { title };
-  const res = await fetch(`${SERVER_URL}/journal-with-name`, {
+  const res = await fetch(`${SERVER_URL}/journal-with-name?title=${title}`, {
     method: 'GET',
     credentials: 'include',
-    body: JSON.stringify(req),
   });
   const data = await res.json();
 
@@ -123,15 +127,18 @@ export const getJournalByName = async (
   return data;
 };
 
-export const updateJournal = async (
-  id: number,
-  journalEntry: string,
+type AppendJournalVariables = {
+  journalId: number;
+  journalEntry: string;
+};
+
+export const appendJournal = async (
+  appendJournalEntry: AppendJournalVariables,
 ): Promise<SuccessResponse> => {
-  const req = { journalId: id, journalEntry };
   const res = await fetch(`${SERVER_URL}/save-journal`, {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify(req),
+    body: JSON.stringify(appendJournalEntry),
   });
   const data = await res.json();
 
