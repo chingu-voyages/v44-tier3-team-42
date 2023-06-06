@@ -78,10 +78,11 @@ const Journal: React.FC<Props> = ({ slug }) => {
         journalId: journalData.id,
         journalEntry: pageText,
       });
+    } else {
+      setAlert({
+        message: `Can't save journal data at the moment. Try again later`,
+      });
     }
-    setAlert({
-      message: `Can't save journal data at the moment. Try again later`,
-    });
   };
 
   if (isLoading) {
@@ -98,10 +99,12 @@ const Journal: React.FC<Props> = ({ slug }) => {
 
   return (
     <>
-      <div className="p-2 mx-auto bg-gray-200 border-2 border-gray-400 rounded-sm lg:w-10/12">
-        <div className="grid grid-flow-col grid-row-1 grid-col-2 gap-x-2 ">
+      <div className="p-3 mx-auto bg-gray-200 border-2 border-gray-400 rounded-sm lg:w-10/12">
+        <div className="grid grid-flow-col grid-row-1 grid-col-2 gap-x-2">
           <div key={cursor}>
-            <p>{cursor + 1}</p>
+            <div className="flex items-center justify-center w-8 h-8 mx-auto mb-2 rounded-full bg-primarySubtle">
+              <p>{cursor + 1}</p>
+            </div>
             <Notepad
               id={cursor}
               initialText={
@@ -120,7 +123,9 @@ const Journal: React.FC<Props> = ({ slug }) => {
           </div>
           {isDesktop && (
             <div key={cursor + 1}>
-              <p>{cursor + 2}</p>
+              <div className="flex items-center justify-center w-8 h-8 mx-auto mb-2 rounded-full bg-primarySubtle">
+                <p>{cursor + 2}</p>
+              </div>
               <Notepad
                 id={cursor + 1}
                 initialText={
