@@ -29,7 +29,7 @@ const Notepad: React.FC<Props> = ({ id, initialText = '', onSave }) => {
   }, [value, setMdText]);
 
   const saveTextHandler = () => {
-    if (value || value?.trim() === '') {
+    if (typeof value === 'undefined' || value.trim() === '') {
       return;
     }
 
