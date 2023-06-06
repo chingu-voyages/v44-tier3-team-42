@@ -60,9 +60,9 @@ export const getJournals = async (): Promise<GetJournalsResponse[]> => {
     throw new Error((data as ErrorResponse).message);
   }
 
-  if (data.length > 0) {
+  if (Array.isArray(data) && data.length > 0) {
     // Check to see if JSON object in the data array is valid
-    journalReferenceSchema.parse(data[0]);
+    getJournalsResponseSchema.parse(data[0]);
   }
 
   return data;
@@ -74,7 +74,10 @@ export const createJournalRequestSchema = z.object({
     .trim()
     .min(1, { message: 'Include at least a single letter :¬)' })
     .max(50, { message: 'Something a bit shorter please :D' }),
-  url: z.string().url({ message: 'Must provide a valid image url' }),
+  url: z
+    .string()
+    .url({ message: 'Must provide a valid image url' })
+    .max(60, { message: 'Something a bit shorter please :D' }),
 });
 
 export type CreateJournalRequest = z.infer<typeof createJournalRequestSchema>;
@@ -85,6 +88,9 @@ export const createJournal = async (
   const res = await fetch(`${SERVER_URL}/create-journal`, {
     method: 'POST',
     credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
     body: JSON.stringify(newJournal),
   });
   const data = await res.json();
@@ -122,7 +128,7 @@ export const getJournalByName = async (
   }
 
   // Check to see if JSON object in the data array is valid
-  journalReferenceSchema.parse(data);
+  getJournalByNameResponseSchema.parse(data);
 
   return data;
 };
@@ -138,6 +144,9 @@ export const appendJournal = async (
   const res = await fetch(`${SERVER_URL}/save-journal`, {
     method: 'POST',
     credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
     body: JSON.stringify(appendJournalEntry),
   });
   const data = await res.json();
