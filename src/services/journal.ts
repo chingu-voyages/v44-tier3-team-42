@@ -60,9 +60,9 @@ export const getJournals = async (): Promise<GetJournalsResponse[]> => {
     throw new Error((data as ErrorResponse).message);
   }
 
-  if (data.length > 0) {
+  if (Array.isArray(data) && data.length > 0) {
     // Check to see if JSON object in the data array is valid
-    journalReferenceSchema.parse(data[0]);
+    getJournalsResponseSchema.parse(data[0]);
   }
 
   return data;
@@ -74,7 +74,10 @@ export const createJournalRequestSchema = z.object({
     .trim()
     .min(1, { message: 'Include at least a single letter :¬)' })
     .max(50, { message: 'Something a bit shorter please :D' }),
-  url: z.string().url({ message: 'Must provide a valid image url' }),
+  url: z
+    .string()
+    .url({ message: 'Must provide a valid image url' })
+    .max(60, { message: 'Something a bit shorter please :D' }),
 });
 
 export type CreateJournalRequest = z.infer<typeof createJournalRequestSchema>;
@@ -85,7 +88,66 @@ export const createJournal = async (
   const res = await fetch(`${SERVER_URL}/create-journal`, {
     method: 'POST',
     credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
     body: JSON.stringify(newJournal),
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error((data as ErrorResponse).message);
+  }
+
+  return data;
+};
+
+const getJournalByNameResponseSchema = journalReferenceSchema.extend({
+  sections: z.array(
+    z.object({
+      contentDetails: journalContentSchema,
+    }),
+  ),
+});
+
+export type GetJournalByNameResponse = z.infer<
+  typeof getJournalByNameResponseSchema
+>;
+
+export const getJournalByName = async (
+  title: string,
+): Promise<GetJournalByNameResponse> => {
+  const res = await fetch(`${SERVER_URL}/journal-with-name?title=${title}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error((data as ErrorResponse).message);
+  }
+
+  // Check to see if JSON object in the data array is valid
+  getJournalByNameResponseSchema.parse(data);
+
+  return data;
+};
+
+type AppendJournalVariables = {
+  journalId: number;
+  journalEntry: string;
+};
+
+export const appendJournal = async (
+  appendJournalEntry: AppendJournalVariables,
+): Promise<SuccessResponse> => {
+  const res = await fetch(`${SERVER_URL}/save-journal`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(appendJournalEntry),
   });
   const data = await res.json();
 
