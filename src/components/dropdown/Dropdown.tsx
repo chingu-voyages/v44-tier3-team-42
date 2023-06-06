@@ -53,27 +53,7 @@ const Dropdown = () => (
     </Menu>
   </div>
 
-  /*<Menu>
-    <Menu.Button>
-      <User />
-    </Menu.Button>
-    <Menu.Items>
-      <Menu.Item>
-        <span className="opacity-75">Profile (coming soon!)</span>
-      </Menu.Item>
-
-      <Menu.Item disabled>
-        <span className="opacity-75">I lost my key (coming soon!)</span>
-      </Menu.Item>
-      <Menu.Item>
-        {({ active }) => (
-          <button type="submit" className={`${active && 'bg-blue-500'}`}>
-            <LogoutUser />
-          </button>
-        )}
-      </Menu.Item>
-    </Menu.Items>
-  </Menu>*/
+ 
 );
 
 export default Dropdown;

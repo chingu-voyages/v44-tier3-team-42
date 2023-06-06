@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 'use client';
 
 import LoginUser from '@/components/auth/LoginUser/LoginUser';
-import LogoutUser from '@/components/auth/LogoutUser/LogoutUser';
 
 const Landing = () => (
   <main className="min-h-screen p-12">
@@ -11,11 +9,6 @@ const Landing = () => (
       <h2 className="">Already have an account?</h2>
       <LoginUser />
     </div>
-=======
-const Landing = () => (
-  <main className="min-h-screen p-12">
-    <div>Landing</div>
->>>>>>> fb7085d5e758d21b7b906019aedd77576f170a22
   </main>
 );
 
