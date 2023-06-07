@@ -31,14 +31,14 @@ const Dropdown = () => (
           <div className="px-1 py-1">
             <Menu.Item disabled>
               {({ active }) => (
-                <button className="opacity-75">Profile (coming soon!)</button>
+                <button type="button" className="opacity-75">Profile (coming soon!)</button>
               )}
             </Menu.Item>
           </div>
           <div className="px-1 py-1">
             <Menu.Item disabled>
               {({ active }) => (
-                <button className="opacity-75">
+                <button type="button" className="opacity-75">
                   I lost my keys (coming soon!)
                 </button>
               )}

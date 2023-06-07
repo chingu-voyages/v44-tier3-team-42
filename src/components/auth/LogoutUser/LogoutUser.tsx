@@ -29,6 +29,7 @@ const LogoutUser = () => {
         className="text-black"
         variant="tertiary"
         onClick={() => setIsOpen(true)}
+        type="button"
       >
         Logout
       </Button>
@@ -44,7 +45,7 @@ const LogoutUser = () => {
         </p>
         <Button
           onClick={() => logoutUserMutation.mutate()}
-          type="submit"
+          type="button"
           className="mt-8 place-self-center w-max hover:bg-blue-700 focus:shadow-outline"
         >
           Ok

@@ -30,7 +30,11 @@ const LoginUser = () => {
 
   return (
     <>
-      <Button className='bg-primary text-white' variant="tertiary" onClick={() => setIsOpen(true)}>
+      <Button
+        className="bg-primary text-white"
+        variant="tertiary"
+        onClick={() => setIsOpen(true)}
+      >
         Login
       </Button>
       <Dialog title="Login" open={isOpen} onClose={() => setIsOpen(false)}>
