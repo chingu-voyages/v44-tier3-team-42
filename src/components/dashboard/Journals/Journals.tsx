@@ -1,13 +1,13 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getJournals } from '@/services';
 import SearchInput from './SearchInput';
 import JournalsList from './JournalsList';
 
-const Journals = () => {
+const Journals: React.FC = () => {
   const {
     data: journalsData,
     isLoading,
@@ -19,18 +19,26 @@ const Journals = () => {
   const searchUpdateHandler = useCallback(
     (newQuery: string) => {
       setFilteredJournals((prevJournals) => {
-        if (typeof journalsData === 'undefined') {
-          return prevJournals;
+        if (newQuery === '') {
+          return journalsData;
         }
 
-        return [...journalsData].filter((journal) => {
-          const transformedTitle = journal.journal_title.toLowerCase();
-          return transformedTitle.includes(newQuery);
-        });
+        if (Array.isArray(journalsData)) {
+          return [...journalsData].filter((journal) => {
+            const transformedTitle = journal.journal_title.toLowerCase();
+            return transformedTitle.includes(newQuery);
+          });
+        }
+
+        return prevJournals;
       });
     },
     [journalsData],
   );
+
+  useEffect(() => {
+    setFilteredJournals(journalsData);
+  }, [journalsData]);
 
   if (isLoading) {
     return <p>Loading...</p>;
