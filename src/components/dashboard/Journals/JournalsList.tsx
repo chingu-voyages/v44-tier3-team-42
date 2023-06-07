@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Edit } from 'react-iconly';
 
 import { Button } from '@/components/ui';
@@ -10,11 +11,9 @@ type Props = {
 
 const JournalsList: React.FC<Props> = ({ journals }) => (
   <div className="grid max-w-4xl grid-cols-2 gap-4 mx-auto sm:grid-cols-3 justify-items-center place-content-center">
-    {journals.map(({ cover_image }, idx) => (
+    {journals.map(({ id, cover_image, journal_title }) => (
       <div
-        // NOTE: Backend doesn't return an id so we opt to this
-        // eslint-disable-next-line react/no-array-index-key
-        key={idx}
+        key={id}
         className="relative w-full border-2 rounded-lg border-subtleLight"
       >
         <div className="relative w-full h-52 sm:h-56 md:h-60 lg:h-64">
@@ -35,7 +34,7 @@ const JournalsList: React.FC<Props> = ({ journals }) => (
           size="sm"
           variant="secondary"
         >
-          View
+          <Link href={`./dashboard/journals/${journal_title}`}>View</Link>
         </Button>
       </div>
     ))}
