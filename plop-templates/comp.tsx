@@ -14,3 +14,4 @@ export const Example: React.FC<ExampleProps> = () => (
 if (process.env.NODE_ENV !== 'production') {
   Example.displayName = 'Example';
 }
+
