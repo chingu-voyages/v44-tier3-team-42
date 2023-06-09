@@ -1,10 +1,9 @@
 import { dehydrate, Hydrate } from '@tanstack/react-query';
-
 import getQueryClient from '@/app/getQueryClient';
 import CreateJournal from '@/components/dashboard/CreateJournal';
 import Journals from '@/components/dashboard/Journals';
-import { getJournals } from '@/services';
 import Dropdown from '@/components/dropdown';
+import { getJournals } from '@/services';
 
 const Dashboard = async () => {
   const queryClient = getQueryClient();
