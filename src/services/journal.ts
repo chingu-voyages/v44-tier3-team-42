@@ -102,6 +102,45 @@ export const createJournal = async (
   return data;
 };
 
+
+// Edit Journal
+
+export const editJournalRequestSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: 'Include at least a single letter :¬)' })
+    .max(50, { message: 'Something a bit shorter please :D' }),
+  url: z
+    .string()
+    .url({ message: 'Must provide a valid image url' })
+    .max(60, { message: 'Something a bit shorter please :D' }),
+});
+
+export type EditJournalRequest = z.infer<typeof editJournalRequestSchema>;
+
+export const editJournal = async (
+  updatedJournal: EditJournalRequest,
+): Promise<SuccessResponse> => {
+  const res = await fetch(`${SERVER_URL}/edit-journal`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(updatedJournal),
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error((data as ErrorResponse).message);
+  }
+
+  return data;
+};
+
+
+// Get Journal by Name
 const getJournalByNameResponseSchema = journalReferenceSchema.extend({
   sections: z.array(
     z.object({

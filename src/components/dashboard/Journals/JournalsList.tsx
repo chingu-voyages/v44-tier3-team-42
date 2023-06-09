@@ -4,6 +4,7 @@ import { Edit } from 'react-iconly';
 
 import { Button } from '@/components/ui';
 import type { GetJournalsResponse } from '@/services';
+import EditJournal from '../EditJournal/EditJournal';
 
 type Props = {
   journals: GetJournalsResponse[];
@@ -26,7 +27,7 @@ const JournalsList: React.FC<Props> = ({ journals }) => (
             type="button"
             className="rounded-full text-primary bg-primarySubtle p-[10px]"
           >
-            <Edit size="small" />
+            <EditJournal />
           </button>
         </div>
         <Button
