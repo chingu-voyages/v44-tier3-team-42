@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight } from 'react-iconly';
 
 import useBoundStore from '@/store';
 import { useLocalStorage, useBreakpoint } from '@/hooks';
-import { getJournalByName, appendJournal } from '@/services';
+import { getJournalByName, appendJournalEntry } from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
 import Notepad from './Notepad';
 
@@ -23,7 +23,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
     error,
   } = useQuery([slug], () => getJournalByName(slug));
   const appendJournalMutation = useMutation({
-    mutationFn: appendJournal,
+    mutationFn: appendJournalEntry,
     onSuccess: (data) => {
       setAlert({
         type: 'success',
@@ -72,15 +72,16 @@ const Journal: React.FC<Props> = ({ slug }) => {
     [cursor, isDesktop, journalData, setCursor],
   );
 
-  const savePageHandler = (pageText: string) => {
+  const savePageHandler = (content: string, sectionNumber: number) => {
     if (journalData) {
       appendJournalMutation.mutate({
-        journalId: journalData.id,
-        journalEntry: pageText,
+        referenceId: journalData.id,
+        content,
+        sectionNumber,
       });
     } else {
       setAlert({
-        message: `Can't save journal data at the moment. Try again later`,
+        message: `Can't save journal page at the moment. Try again later`,
       });
     }
   };
@@ -116,7 +117,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
               }
               onSave={
                 cursor >= journalSectionsLength
-                  ? (text) => savePageHandler(text)
+                  ? (newText) => savePageHandler(newText, cursor + 1)
                   : undefined
               }
             />
@@ -137,7 +138,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
                 }
                 onSave={
                   cursor + 1 >= journalSectionsLength
-                    ? (text) => savePageHandler(text)
+                    ? (newText) => savePageHandler(newText, cursor + 2)
                     : undefined
                 }
               />
