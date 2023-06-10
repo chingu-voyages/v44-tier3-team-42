@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowLeft, ArrowRight } from 'react-iconly';
+import { ArrowLeft, ArrowRight, PaperDownload } from 'react-iconly';
 
 import useBoundStore from '@/store';
+import { Button } from '@/components/ui';
 import { useLocalStorage, useBreakpoint } from '@/hooks';
 import { getJournalByName, appendJournal } from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
+import { generatePDF } from '@/utils';
 import Notepad from './Notepad';
 
 type Props = {
@@ -71,6 +73,24 @@ const Journal: React.FC<Props> = ({ slug }) => {
     },
     [cursor, isDesktop, journalData, setCursor],
   );
+
+  const exportPagesHandler = useCallback(() => {
+    if (journalData) {
+      const { parseMarkdown, exportPDF } = generatePDF();
+
+      // Get content of each page from sections
+      // and parse it onto a new page
+      journalData.sections.map(({ contentDetails }, idx) =>
+        parseMarkdown(contentDetails.content, idx !== 0),
+      );
+
+      exportPDF(`${journalData.journal_title}-thoughts.pdf`);
+    } else {
+      setAlert({
+        message: `Can't save journal data at the moment. Try again later`,
+      });
+    }
+  }, [journalData, setAlert]);
 
   const savePageHandler = (pageText: string) => {
     if (journalData) {
@@ -173,6 +193,21 @@ const Journal: React.FC<Props> = ({ slug }) => {
             width: `${((cursor + 1) / (journalSectionsLength + 2)) * 100}%`,
           }}
         />
+      </div>
+
+      <div className="mt-16">
+        <Button
+          size="lg"
+          className="block mx-auto "
+          leadIcon={<PaperDownload />}
+          onClick={exportPagesHandler}
+        >
+          Export
+        </Button>
+        <p className="mt-8 max-w-[45ch] mx-auto text-center font-bold text-sm">
+          Note: If you use markdown features not present in the editor, then
+          your PDF may export weirdly...
+        </p>
       </div>
     </>
   );
