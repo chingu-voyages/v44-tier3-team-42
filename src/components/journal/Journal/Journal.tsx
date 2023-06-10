@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight } from 'react-iconly';
 
 import useBoundStore from '@/store';
 import { useLocalStorage, useBreakpoint } from '@/hooks';
-import { getJournalByName, appendJournal } from '@/services';
+import { getJournalByName, appendJournal, editJournalEntry } from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
 import Notepad from './Notepad';
 
@@ -24,6 +24,21 @@ const Journal: React.FC<Props> = ({ slug }) => {
   } = useQuery([slug], () => getJournalByName(slug));
   const appendJournalMutation = useMutation({
     mutationFn: appendJournal,
+    onSuccess: (data) => {
+      setAlert({
+        type: 'success',
+        message: data.message,
+      });
+    },
+    onError: (err: Error) => {
+      setAlert({
+        type: 'error',
+        message: err.message,
+      });
+    },
+  });
+  const updateJournalMutation = useMutation({
+    mutationFn: editJournalEntry,
     onSuccess: (data) => {
       setAlert({
         type: 'success',
@@ -85,6 +100,16 @@ const Journal: React.FC<Props> = ({ slug }) => {
     }
   };
 
+  const editPageHandler = (id: number, content: string) => {
+    if (journalData) {
+      updateJournalMutation.mutate({ id, content });
+    } else {
+      setAlert({
+        message: `Can't save journal data at the moment. Try again later`,
+      });
+    }
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -119,6 +144,12 @@ const Journal: React.FC<Props> = ({ slug }) => {
                   ? (text) => savePageHandler(text)
                   : undefined
               }
+              onEdit={
+                // Only allow EDITS for existing journal pages
+                cursor < journalSectionsLength
+                  ? (updatedText) => editPageHandler(cursor, updatedText)
+                  : undefined
+              }
             />
           </div>
           {isDesktop && (
@@ -138,6 +169,12 @@ const Journal: React.FC<Props> = ({ slug }) => {
                 onSave={
                   cursor + 1 >= journalSectionsLength
                     ? (text) => savePageHandler(text)
+                    : undefined
+                }
+                onEdit={
+                  // Only allow EDITS for existing journal pages
+                  cursor < journalSectionsLength - 1
+                    ? (updatedText) => editPageHandler(cursor + 1, updatedText)
                     : undefined
                 }
               />
