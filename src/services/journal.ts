@@ -133,21 +133,22 @@ export const getJournalByName = async (
   return data;
 };
 
-type AppendJournalVariables = {
-  journalId: number;
-  journalEntry: string;
+type AppendJournalEntryVariables = {
+  referenceId: number;
+  content: string;
+  sectionNumber: number;
 };
 
-export const appendJournal = async (
-  appendJournalEntry: AppendJournalVariables,
+export const appendJournalEntry = async (
+  variables: AppendJournalEntryVariables,
 ): Promise<SuccessResponse> => {
-  const res = await fetch(`${SERVER_URL}/save-journal`, {
+  const res = await fetch(`${SERVER_URL}/save-section`, {
     method: 'POST',
     credentials: 'include',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    body: JSON.stringify(appendJournalEntry),
+    body: JSON.stringify(variables),
   });
   const data = await res.json();
 

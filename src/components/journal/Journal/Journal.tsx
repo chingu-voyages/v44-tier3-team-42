@@ -7,7 +7,11 @@ import { ArrowLeft, ArrowRight, PaperDownload } from 'react-iconly';
 import useBoundStore from '@/store';
 import { Button } from '@/components/ui';
 import { useLocalStorage, useBreakpoint } from '@/hooks';
-import { getJournalByName, appendJournal, editJournalEntry } from '@/services';
+import {
+  getJournalByName,
+  appendJournalEntry,
+  editJournalEntry,
+} from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
 import { generatePDF } from '@/utils';
 import Notepad from './Notepad';
@@ -24,8 +28,8 @@ const Journal: React.FC<Props> = ({ slug }) => {
     isError,
     error,
   } = useQuery([slug], () => getJournalByName(slug));
-  const appendJournalMutation = useMutation({
-    mutationFn: appendJournal,
+  const appendJournalEntryMutation = useMutation({
+    mutationFn: appendJournalEntry,
     onSuccess: (data) => {
       setAlert({
         type: 'success',
@@ -39,7 +43,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
       });
     },
   });
-  const updateJournalMutation = useMutation({
+  const editJournalEntryMutation = useMutation({
     mutationFn: editJournalEntry,
     onSuccess: (data) => {
       setAlert({
@@ -107,25 +111,26 @@ const Journal: React.FC<Props> = ({ slug }) => {
     }
   }, [journalData, setAlert]);
 
-  const savePageHandler = (pageText: string) => {
+  const savePageHandler = (content: string, sectionNumber: number) => {
     if (journalData) {
-      appendJournalMutation.mutate({
-        journalId: journalData.id,
-        journalEntry: pageText,
+      appendJournalEntryMutation.mutate({
+        referenceId: journalData.id,
+        content,
+        sectionNumber,
       });
     } else {
       setAlert({
-        message: `Can't save journal data at the moment. Try again later`,
+        message: `Can't save journal page at the moment. Try again later`,
       });
     }
   };
 
   const editPageHandler = (id: number, content: string) => {
     if (journalData) {
-      updateJournalMutation.mutate({ id, content });
+      editJournalEntryMutation.mutate({ id, content });
     } else {
       setAlert({
-        message: `Can't save journal data at the moment. Try again later`,
+        message: `Can't save journal page at the moment. Try again later`,
       });
     }
   };
@@ -161,7 +166,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
               }
               onSave={
                 cursor >= journalSectionsLength
-                  ? (text) => savePageHandler(text)
+                  ? (newText) => savePageHandler(newText, cursor + 1)
                   : undefined
               }
               onEdit={
@@ -188,7 +193,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
                 }
                 onSave={
                   cursor + 1 >= journalSectionsLength
-                    ? (text) => savePageHandler(text)
+                    ? (newText) => savePageHandler(newText, cursor + 2)
                     : undefined
                 }
                 onEdit={
