@@ -1,30 +1,25 @@
 import { useState } from 'react';
 
+const isSSR = typeof window === 'undefined';
+
 function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.log(error);
+    if (isSSR) {
+      return initialValue;
     }
 
-    return initialValue;
+    const item = window.localStorage.getItem(key);
+    return item ? JSON.parse(item) : initialValue;
   });
 
   const setValue = (value: T) => {
-    try {
-      // Replicate same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
+    // Replicate same API as useState
+    const valueToStore = value instanceof Function ? value(storedValue) : value;
+    setStoredValue(valueToStore);
 
-      if (typeof window !== 'undefined') {
-        // Checks if SSR and SSG work properly
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-    } catch (error) {
-      console.log(error);
+    if (!isSSR) {
+      // Checks if page is being server-side rendered
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
     }
   };
 
