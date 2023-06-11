@@ -157,3 +157,28 @@ export const appendJournal = async (
 
   return data;
 };
+
+type EditJournalEntryVariables = {
+  id: number;
+  content: string;
+};
+
+export const editJournalEntry = async (
+  variables: EditJournalEntryVariables,
+): Promise<SuccessResponse> => {
+  const res = await fetch(`${SERVER_URL}/edit-section`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(variables),
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error((data as ErrorResponse).message);
+  }
+
+  return data;
+};
