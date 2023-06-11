@@ -28,7 +28,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
     isError,
     error,
   } = useQuery([slug], () => getJournalByName(slug));
-  const appendJournalMutation = useMutation({
+  const appendJournalEntryMutation = useMutation({
     mutationFn: appendJournalEntry,
     onSuccess: (data) => {
       setAlert({
@@ -43,7 +43,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
       });
     },
   });
-  const updateJournalMutation = useMutation({
+  const editJournalEntryMutation = useMutation({
     mutationFn: editJournalEntry,
     onSuccess: (data) => {
       setAlert({
@@ -113,7 +113,7 @@ const Journal: React.FC<Props> = ({ slug }) => {
 
   const savePageHandler = (content: string, sectionNumber: number) => {
     if (journalData) {
-      appendJournalMutation.mutate({
+      appendJournalEntryMutation.mutate({
         referenceId: journalData.id,
         content,
         sectionNumber,
@@ -125,19 +125,9 @@ const Journal: React.FC<Props> = ({ slug }) => {
     }
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return (
-      <p>{error ? `An error has occurred: ${error}` : 'Unexpected error!'}</p>
-    );
-  }
-
   const editPageHandler = (id: number, content: string) => {
     if (journalData) {
-      updateJournalMutation.mutate({ id, content });
+      editJournalEntryMutation.mutate({ id, content });
     } else {
       setAlert({
         message: `Can't save journal page at the moment. Try again later`,
