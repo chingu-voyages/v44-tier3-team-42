@@ -4,7 +4,6 @@ import { Menu, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { User } from 'react-iconly';
 
-import Logout from '../auth/LogoutUser';
 import LogoutUser from '../auth/LogoutUser/LogoutUser';
 
 const Dropdown = () => (
@@ -27,17 +26,19 @@ const Dropdown = () => (
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="p-3 bg-white border rounded-md border-black">
+        <Menu.Items className="p-3 bg-white border border-black rounded-md">
           <div className="px-1 py-1">
             <Menu.Item disabled>
-              {({ active }) => (
-                <button type="button" className="opacity-75">Profile (coming soon!)</button>
+              {() => (
+                <button type="button" className="opacity-75">
+                  Profile (coming soon!)
+                </button>
               )}
             </Menu.Item>
           </div>
           <div className="px-1 py-1">
             <Menu.Item disabled>
-              {({ active }) => (
+              {() => (
                 <button type="button" className="opacity-75">
                   I lost my keys (coming soon!)
                 </button>
@@ -45,15 +46,13 @@ const Dropdown = () => (
             </Menu.Item>
           </div>
 
-          <div className=" py-1">
+          <div className="py-1 ">
             <Menu.Item>{() => <LogoutUser />}</Menu.Item>
           </div>
         </Menu.Items>
       </Transition>
     </Menu>
   </div>
-
- 
 );
 
 export default Dropdown;
