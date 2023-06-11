@@ -10,6 +10,10 @@ type SuccessResponse = {
   message: string;
 };
 
+export type CustomError = Error & {
+  status?: number;
+};
+
 /// ///////////////////////////////////
 /// //////// SCHEMAS
 /// ///////////////////////////////////
@@ -57,7 +61,9 @@ export const getJournals = async (): Promise<GetJournalsResponse[]> => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error((data as ErrorResponse).message);
+    const err = new Error((data as ErrorResponse).message) as CustomError;
+    err.status = res.status;
+    throw err;
   }
 
   if (Array.isArray(data) && data.length > 0) {
@@ -96,7 +102,9 @@ export const createJournal = async (
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error((data as ErrorResponse).message);
+    const err = new Error((data as ErrorResponse).message) as CustomError;
+    err.status = res.status;
+    throw err;
   }
 
   return data;
@@ -124,7 +132,9 @@ export const getJournalByName = async (
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error((data as ErrorResponse).message);
+    const err = new Error((data as ErrorResponse).message) as CustomError;
+    err.status = res.status;
+    throw err;
   }
 
   // Check to see if JSON object in the data array is valid
@@ -153,7 +163,9 @@ export const appendJournalEntry = async (
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error((data as ErrorResponse).message);
+    const err = new Error((data as ErrorResponse).message) as CustomError;
+    err.status = res.status;
+    throw err;
   }
 
   return data;
@@ -178,7 +190,9 @@ export const editJournalEntry = async (
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error((data as ErrorResponse).message);
+    const err = new Error((data as ErrorResponse).message) as CustomError;
+    err.status = res.status;
+    throw err;
   }
 
   return data;
