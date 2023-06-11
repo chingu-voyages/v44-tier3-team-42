@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, PaperDownload } from 'react-iconly';
@@ -11,6 +12,7 @@ import {
   getJournalByName,
   appendJournalEntry,
   editJournalEntry,
+  type CustomError,
 } from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
 import { generatePDF } from '@/utils';
@@ -21,13 +23,22 @@ type Props = {
 };
 
 const Journal: React.FC<Props> = ({ slug }) => {
+  const router = useRouter();
   const setAlert = useBoundStore((state) => state.setAlert);
   const {
     data: journalData,
     isLoading,
     isError,
     error,
-  } = useQuery([slug], () => getJournalByName(slug));
+  } = useQuery([slug], () => getJournalByName(slug), {
+    onError: (err: CustomError) => {
+      if (err.status === 401) {
+        // If user is unauthenticated then
+        // redirect back to index page
+        router.replace('/');
+      }
+    },
+  });
   const appendJournalEntryMutation = useMutation({
     mutationFn: appendJournalEntry,
     onSuccess: (data) => {
@@ -36,7 +47,13 @@ const Journal: React.FC<Props> = ({ slug }) => {
         message: data.message,
       });
     },
-    onError: (err: Error) => {
+    onError: (err: CustomError) => {
+      if (err.status === 401) {
+        // If user is unauthenticated then
+        // redirect back to index page
+        router.replace('/');
+      }
+
       setAlert({
         type: 'error',
         message: err.message,
@@ -51,7 +68,13 @@ const Journal: React.FC<Props> = ({ slug }) => {
         message: data.message,
       });
     },
-    onError: (err: Error) => {
+    onError: (err: CustomError) => {
+      if (err.status === 401) {
+        // If user is unauthenticated then
+        // redirect back to index page
+        router.replace('/');
+      }
+
       setAlert({
         type: 'error',
         message: err.message,

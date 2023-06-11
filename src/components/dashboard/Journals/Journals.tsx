@@ -1,19 +1,29 @@
 'use client';
 
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { getJournals } from '@/services';
+import { type CustomError, getJournals } from '@/services';
 import SearchInput from './SearchInput';
 import JournalsList from './JournalsList';
 
 const Journals: React.FC = () => {
+  const router = useRouter();
   const {
     data: journalsData,
     isLoading,
     isError,
     error,
-  } = useQuery(['user-journals'], getJournals);
+  } = useQuery(['user-journals'], getJournals, {
+    onError: (err: CustomError) => {
+      if (err.status === 401) {
+        // If user is unauthenticated then
+        // redirect back to index page
+        router.replace('/');
+      }
+    },
+  });
   const [filteredJournals, setFilteredJournals] = useState(journalsData);
 
   const searchUpdateHandler = useCallback(

@@ -1,14 +1,16 @@
 'use client';
 
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { Button, Dialog } from '@/components/ui';
-import { createJournal } from '@/services';
+import { type CustomError, createJournal } from '@/services';
 import useBoundStore from '@/store';
 import NewJournalForm from './NewJournalForm';
 
 const CreateJournal = () => {
+  const router = useRouter();
   const setAlert = useBoundStore((state) => state.setAlert);
   const [isOpen, setIsOpen] = useState(false);
   const newJournalMutation = useMutation({
@@ -17,7 +19,13 @@ const CreateJournal = () => {
       setIsOpen(false);
       setAlert({ type: 'success', message: data.message });
     },
-    onError: (err: Error) => {
+    onError: (err: CustomError) => {
+      if (err.status === 401) {
+        // If user is unauthenticated then
+        // redirect back to index page
+        router.replace('/');
+      }
+
       setAlert({
         type: 'default',
         message: err.message,
