@@ -2,12 +2,18 @@
 
 import { useCallback, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowLeft, ArrowRight } from 'react-iconly';
+import { ArrowLeft, ArrowRight, PaperDownload } from 'react-iconly';
 
 import useBoundStore from '@/store';
+import { Button } from '@/components/ui';
 import { useLocalStorage, useBreakpoint } from '@/hooks';
-import { getJournalByName, appendJournalEntry } from '@/services';
+import {
+  getJournalByName,
+  appendJournalEntry,
+  editJournalEntry,
+} from '@/services';
 import { MEDIA_QUERY_BREAKPOINTS } from '@/config/constants';
+import { generatePDF } from '@/utils';
 import Notepad from './Notepad';
 
 type Props = {
@@ -24,6 +30,21 @@ const Journal: React.FC<Props> = ({ slug }) => {
   } = useQuery([slug], () => getJournalByName(slug));
   const appendJournalMutation = useMutation({
     mutationFn: appendJournalEntry,
+    onSuccess: (data) => {
+      setAlert({
+        type: 'success',
+        message: data.message,
+      });
+    },
+    onError: (err: Error) => {
+      setAlert({
+        type: 'error',
+        message: err.message,
+      });
+    },
+  });
+  const updateJournalMutation = useMutation({
+    mutationFn: editJournalEntry,
     onSuccess: (data) => {
       setAlert({
         type: 'success',
@@ -72,6 +93,24 @@ const Journal: React.FC<Props> = ({ slug }) => {
     [cursor, isDesktop, journalData, setCursor],
   );
 
+  const exportPagesHandler = useCallback(() => {
+    if (journalData) {
+      const { parseMarkdown, exportPDF } = generatePDF();
+
+      // Get content of each page from sections
+      // and parse it onto a new page
+      journalData.sections.map(({ contentDetails }, idx) =>
+        parseMarkdown(contentDetails.content, idx !== 0),
+      );
+
+      exportPDF(`${journalData.journal_title}-thoughts.pdf`);
+    } else {
+      setAlert({
+        message: `Can't save journal data at the moment. Try again later`,
+      });
+    }
+  }, [journalData, setAlert]);
+
   const savePageHandler = (content: string, sectionNumber: number) => {
     if (journalData) {
       appendJournalMutation.mutate({
@@ -79,6 +118,26 @@ const Journal: React.FC<Props> = ({ slug }) => {
         content,
         sectionNumber,
       });
+    } else {
+      setAlert({
+        message: `Can't save journal page at the moment. Try again later`,
+      });
+    }
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return (
+      <p>{error ? `An error has occurred: ${error}` : 'Unexpected error!'}</p>
+    );
+  }
+
+  const editPageHandler = (id: number, content: string) => {
+    if (journalData) {
+      updateJournalMutation.mutate({ id, content });
     } else {
       setAlert({
         message: `Can't save journal page at the moment. Try again later`,
@@ -120,6 +179,12 @@ const Journal: React.FC<Props> = ({ slug }) => {
                   ? (newText) => savePageHandler(newText, cursor + 1)
                   : undefined
               }
+              onEdit={
+                // Only allow EDITS for existing journal pages
+                cursor < journalSectionsLength
+                  ? (updatedText) => editPageHandler(cursor, updatedText)
+                  : undefined
+              }
             />
           </div>
           {isDesktop && (
@@ -139,6 +204,12 @@ const Journal: React.FC<Props> = ({ slug }) => {
                 onSave={
                   cursor + 1 >= journalSectionsLength
                     ? (newText) => savePageHandler(newText, cursor + 2)
+                    : undefined
+                }
+                onEdit={
+                  // Only allow EDITS for existing journal pages
+                  cursor < journalSectionsLength - 1
+                    ? (updatedText) => editPageHandler(cursor + 1, updatedText)
                     : undefined
                 }
               />
@@ -174,6 +245,21 @@ const Journal: React.FC<Props> = ({ slug }) => {
             width: `${((cursor + 1) / (journalSectionsLength + 2)) * 100}%`,
           }}
         />
+      </div>
+
+      <div className="mt-16">
+        <Button
+          size="lg"
+          className="block mx-auto "
+          leadIcon={<PaperDownload />}
+          onClick={exportPagesHandler}
+        >
+          Export
+        </Button>
+        <p className="mt-8 max-w-[45ch] mx-auto text-center font-bold text-sm">
+          Note: If you use markdown features not present in the editor, then
+          your PDF may export weirdly...
+        </p>
       </div>
     </>
   );

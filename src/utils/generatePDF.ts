@@ -43,8 +43,13 @@ const generatePDF = () => {
     cursorPos += 5;
   };
 
-  const parseMarkdown = (content: string) => {
+  const parseMarkdown = (content: string, startNewPage = false) => {
     const lines = content.split('\n');
+
+    if (startNewPage) {
+      doc.addPage();
+    }
+
     lines.forEach((line) => writeLine(line));
   };
 
